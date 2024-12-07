@@ -19,7 +19,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
         }
 
         // Determine whether a lower texture is needed after the sector raises to the highest neighbour floor.
-        protected override bool HasAdjustedSector(Sidedef side)
+        protected override bool HasAdjustedSector(Sidedef side, ActionTrigger actiontrigger)
         {
             int highestheight = side.Sector.FloorHeight;
 
