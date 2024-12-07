@@ -12,9 +12,23 @@ namespace CodeImp.DoomBuilder.BuilderModes
 {
 	public abstract class BaseActionTextures
 	{
+		protected struct ActionTrigger
+		{
+			public ActionTrigger(LinedefActionInfo actionInfo, int tag, int units)
+			{
+				ActionInfo = actionInfo;
+				Tag = tag;
+				Units = units;
+			}
+
+			public LinedefActionInfo ActionInfo { get; }
+			public int Tag { get; }
+			public int Units { get; }
+		}
+
 		#region ================== Variables
 
-		private List<int> tags;
+		private List<ActionTrigger> actiontriggers;
 
 		#endregion
 
@@ -22,7 +36,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 
 		public BaseActionTextures()
 		{
-			tags = FindTags();
+			actiontriggers = FindActionTriggers();
 		}
 
 		#endregion
@@ -32,31 +46,34 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		// Determine if the sidedef's sector tag is for an inspected action and the sidedef will require a texture.
 		public bool RequiresTexture(Sidedef side, int tag)
 		{
-			return tags.Contains(tag) &&
-				side.Other != null &&
+			return side.Other != null &&
 				side.Other.Sector != side.Sector &&
 				!side.Other.Sector.Tags.Contains(tag) &&
-				HasAdjustedSector(side);
+				actiontriggers.Exists(actiontrigger => actiontrigger.Tag == tag &&
+					HasAdjustedSector(side, actiontrigger));
 		}
 
 		// Gather all sector tags for the linedef actions being inspected.
-		private List<int> FindTags()
+		private List<ActionTrigger> FindActionTriggers()
 		{
 			List<int> actions = FindActions();
-			List<int> tags = new List<int>();
+			List<ActionTrigger> actiontriggers = new List<ActionTrigger>();
+			LinedefActionInfo actionInfo;
 			int tag;
 
 			foreach (Linedef ld in General.Map.Map.Linedefs)
 			{
 				if (ld.Action > 0 && actions.Contains(ld.Action))
 				{
+					actionInfo = General.Map.Config.GetLinedefActionInfo(ld.Action);
+
 					if (General.Map.HEXEN || General.Map.UDMF)
-						tag = FindArgumentsSectorTag(ld.Action, ld.Args);
+						tag = FindArgumentsSectorTag(actionInfo, ld.Args);
 					else
 						tag = ld.Tag;
 
 					if (tag > 0)
-						tags.Add(tag);
+						actiontriggers.Add(new ActionTrigger(actionInfo, tag, FindArgumentsUnits(actionInfo, ld.Args)));
 				}
 			}
 
@@ -66,22 +83,39 @@ namespace CodeImp.DoomBuilder.BuilderModes
 				{
 					if (t.Action > 0 && actions.Contains(t.Action))
 					{
-						tag = FindArgumentsSectorTag(t.Action, t.Args);
+						actionInfo = General.Map.Config.GetLinedefActionInfo(t.Action);
+						tag = FindArgumentsSectorTag(actionInfo, t.Args);
 
 						if (tag > 0)
-							tags.Add(tag);
+							actiontriggers.Add(new ActionTrigger(actionInfo, tag, FindArgumentsUnits(actionInfo, t.Args)));
 					}
 				}
 			}
 
-			return tags;
+			return actiontriggers;
 		}
 
 		// Get the sector tag from linedef/things action arguments.
-		private int FindArgumentsSectorTag(int action, int[] args)
+		private int FindArgumentsSectorTag(LinedefActionInfo actionInfo, int[] args)
 		{
-			if (General.Map.Config.GetLinedefActionInfo(action).Args[0].Type == (int)UniversalType.SectorTag)
+			if (actionInfo.Args[0].Type == (int)UniversalType.SectorTag)
 				return args[0];
+
+			return 0;
+		}
+
+		// Get the sector floor/ceiling units shift from linedef/things action arguments.
+		private int FindArgumentsUnits(LinedefActionInfo actionInfo, int[] args)
+		{
+			int i = actionInfo.ErrorCheckerExemptions.ActionUnitsArg;
+
+			// Actions that lower/raise by hardcoded units have priority.
+			if (actionInfo.ErrorCheckerExemptions.ActionUnits > 0)
+				return actionInfo.ErrorCheckerExemptions.ActionUnits;
+
+			// Actions with units defined as a custom argument.
+			if (i >= 0 && i < actionInfo.Args.Length && actionInfo.Args[i].Type == (int)UniversalType.Integer && args[i] > 0)
+				return args[i];
 
 			return 0;
 		}
@@ -102,7 +136,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		protected abstract bool InspectsAction(LinedefActionInfo info);
 
 		// Determine whether an upper or lower texture is required after the sector tag is activated.
-		protected abstract bool HasAdjustedSector(Sidedef side);
+		protected abstract bool HasAdjustedSector(Sidedef side, ActionTrigger actiontrigger);
 
 		#endregion
 	}

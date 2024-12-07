@@ -98,7 +98,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 								}
 
 								// Check if the sector is a floor to be lowered.
-								if (floorlowertolowest.RequiresTexture(sd, tag))
+								if (floorloweractions.Exists(action => action.RequiresTexture(sd, tag)))
 								{
 									unused = false;
 									break;
@@ -118,7 +118,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 								}
 
 								// Check if the other sidedef's sector is a floor to be raised.
-								if (floorraisetonexthigher.RequiresTexture(sd.Other, tag) || floorraisetohighest.RequiresTexture(sd.Other, tag))
+								if (floorraiseactions.Exists(action => action.RequiresTexture(sd.Other, tag)))
 								{
 									unused = false;
 									break;

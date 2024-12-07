@@ -35,9 +35,8 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		#region ================== Variables
 
 		protected Dictionary<int, Flags3DFloor> sector3dfloors;
-		protected ActionFloorLowerToLowestTextures floorlowertolowest;
-		protected ActionFloorRaiseToNextHigherTextures floorraisetonexthigher;
-		protected ActionFloorRaiseToHighestTextures floorraisetohighest;
+		protected List<BaseActionTextures> floorloweractions;
+		protected List<BaseActionTextures> floorraiseactions;
 
 		#endregion
 
@@ -50,9 +49,16 @@ namespace CodeImp.DoomBuilder.BuilderModes
 			SetTotalProgress(General.Map.Map.Sidedefs.Count / PROGRESS_STEP);
 
 			sector3dfloors = new Dictionary<int, Flags3DFloor>();
-			floorlowertolowest = new ActionFloorLowerToLowestTextures();
-			floorraisetonexthigher = new ActionFloorRaiseToNextHigherTextures();
-			floorraisetohighest = new ActionFloorRaiseToHighestTextures();
+			floorloweractions = new List<BaseActionTextures>
+			{
+				new ActionFloorLowerToLowestTextures(),
+			};
+			floorraiseactions = new List<BaseActionTextures>
+			{
+				new ActionFloorRaiseByUnitsTextures(),
+				new ActionFloorRaiseToNextHigherTextures(),
+				new ActionFloorRaiseToHighestTextures(),
+			};
 		}
 
 		#endregion
