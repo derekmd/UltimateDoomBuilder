@@ -32,8 +32,11 @@ namespace CodeImp.DoomBuilder.Config
 		public bool IgnoreMiddleTexture;
 		public bool IgnoreLowerTexture;
 		public bool FloorLowerToLowest;
+		public bool FloorRaiseByUnits;
 		public bool FloorRaiseToNextHigher;
 		public bool FloorRaiseToHighest;
+		public int ActionUnits;
+		public int ActionUnitsArg;
 	}
 
 	public class LinedefActionInfo : INumberedTitle, IComparable<LinedefActionInfo>
@@ -117,9 +120,14 @@ namespace CodeImp.DoomBuilder.Config
 			this.errorcheckerexemptions.IgnoreUpperTexture = cfg.ReadSetting(actionsetting + ".errorchecker.ignoreuppertexture", false);
 			this.errorcheckerexemptions.IgnoreMiddleTexture = cfg.ReadSetting(actionsetting + ".errorchecker.ignoremiddletexture", false);
 			this.errorcheckerexemptions.IgnoreLowerTexture = cfg.ReadSetting(actionsetting + ".errorchecker.ignorelowertexture", false);
+
+			// Error checker linedef actions
 			this.errorcheckerexemptions.FloorLowerToLowest = cfg.ReadSetting(actionsetting + ".errorchecker.floorlowertolowest", false);
+			this.errorcheckerexemptions.FloorRaiseByUnits = cfg.ReadSetting(actionsetting + ".errorchecker.floorraisebyunits", false);
 			this.errorcheckerexemptions.FloorRaiseToNextHigher = cfg.ReadSetting(actionsetting + ".errorchecker.floorraisetonexthigher", false);
 			this.errorcheckerexemptions.FloorRaiseToHighest = cfg.ReadSetting(actionsetting + ".errorchecker.floorraisetohighest", false);
+			this.errorcheckerexemptions.ActionUnits = cfg.ReadSetting(actionsetting + ".errorchecker.units", 0);
+			this.errorcheckerexemptions.ActionUnitsArg = cfg.ReadSetting(actionsetting + ".errorchecker.unitsarg", -1);
 
 			// Read the args
 			for (int i = 0; i < Linedef.NUM_ARGS; i++)
