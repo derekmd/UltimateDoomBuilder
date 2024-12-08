@@ -31,6 +31,7 @@ namespace CodeImp.DoomBuilder.Config
 		public bool IgnoreUpperTexture;
 		public bool IgnoreMiddleTexture;
 		public bool IgnoreLowerTexture;
+		public bool CeilingLowerToFloor;
 		public bool FloorLowerToLowest;
 		public bool FloorRaiseByUnits;
 		public bool FloorRaiseToNextHigher;
@@ -122,6 +123,7 @@ namespace CodeImp.DoomBuilder.Config
 			this.errorcheckerexemptions.IgnoreLowerTexture = cfg.ReadSetting(actionsetting + ".errorchecker.ignorelowertexture", false);
 
 			// Error checker linedef actions
+			this.errorcheckerexemptions.CeilingLowerToFloor = cfg.ReadSetting(actionsetting + ".errorchecker.ceilinglowertofloor", false);
 			this.errorcheckerexemptions.FloorLowerToLowest = cfg.ReadSetting(actionsetting + ".errorchecker.floorlowertolowest", false);
 			this.errorcheckerexemptions.FloorRaiseByUnits = cfg.ReadSetting(actionsetting + ".errorchecker.floorraisebyunits", false);
 			this.errorcheckerexemptions.FloorRaiseToNextHigher = cfg.ReadSetting(actionsetting + ".errorchecker.floorraisetonexthigher", false);
