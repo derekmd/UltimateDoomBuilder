@@ -60,12 +60,19 @@ namespace CodeImp.DoomBuilder.BuilderModes
 							}
 						}
 
-						// Check if the other sidedef's sector is a 3D floor, since we still might need a texture on this one depending on the flags
-						if(sd.Other.Sector.Tags.Count > 0)
+						if (sd.Other.Sector.Tags.Count > 0)
 						{
 							foreach(int tag in sd.Other.Sector.Tags)
 							{
-								if(sector3dfloors.ContainsKey(tag) && sector3dfloors[tag].HasFlag(Flags3DFloor.UseUpper))
+								// Check if the other sidedef's sector is a 3D floor, since we still might need a texture on this one depending on the flags
+								if (sector3dfloors.ContainsKey(tag) && sector3dfloors[tag].HasFlag(Flags3DFloor.UseUpper))
+								{
+									unused = false;
+									break;
+								}
+
+								// Check if the other sidedef's sector is a ceiling to be lowered.
+								if (ceilingloweractions.Exists(action => action.RequiresTexture(sd.Other, tag)))
 								{
 									unused = false;
 									break;
