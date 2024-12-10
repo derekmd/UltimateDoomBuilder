@@ -125,6 +125,7 @@
     <Compile Include="ClassicModes\MakeSectorMode.cs" />
     <Compile Include="ErrorChecks\ActionCeilingLowerToFloorTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorLowerToLowestTextures.cs" />
+    <Compile Include="ErrorChecks\ActionFloorRaiseByShortestLowerTextureTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorRaiseByUnitsTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorRaiseToLowestCeilingTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorRaiseToHighestTextures.cs" />
