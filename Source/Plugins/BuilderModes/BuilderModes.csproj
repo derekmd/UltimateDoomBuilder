@@ -165,6 +165,7 @@
     <Compile Include="FindReplace\FindSidedefUDMFField.cs" />
     <Compile Include="FindReplace\FindThingUDMFField.cs" />
     <Compile Include="FindReplace\FindVertexUDMFField.cs" />
+    <Compile Include="ErrorChecks\ActionFloorRaiseByShortestLowerTextureTextures.cs" />
     <Compile Include="General\Association.cs" />
     <Compile Include="General\BuilderPlug.cs" />
     <Compile Include="General\CopyStructures.cs" />
