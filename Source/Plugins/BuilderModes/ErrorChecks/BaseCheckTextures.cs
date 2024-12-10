@@ -61,6 +61,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 			floorraiseactions = new List<BaseActionTextures>
 			{
 				new ActionFloorRaiseByUnitsTextures(),
+				new ActionFloorRaiseToLowestCeilingTextures(),
 				new ActionFloorRaiseToNextHigherTextures(),
 				new ActionFloorRaiseToHighestTextures(),
 			};
