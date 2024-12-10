@@ -126,6 +126,7 @@
     <Compile Include="ErrorChecks\ActionCeilingLowerToFloorTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorLowerToLowestTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorRaiseByUnitsTextures.cs" />
+    <Compile Include="ErrorChecks\ActionFloorRaiseToLowestCeilingTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorRaiseToHighestTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorRaiseToNextHigherTextures.cs" />
     <Compile Include="ErrorChecks\BaseActionTextures.cs" />
