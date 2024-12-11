@@ -58,6 +58,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 			{
 				new ActionFloorLowerToHighestTextures(),
 				new ActionFloorLowerToLowestTextures(),
+				new ActionFloorLowerToNearestTextures(),
 			};
 			floorraiseactions = new List<BaseActionTextures>
 			{
