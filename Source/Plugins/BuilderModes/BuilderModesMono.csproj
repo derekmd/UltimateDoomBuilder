@@ -124,6 +124,7 @@
     <Compile Include="ClassicModes\FindReplaceMode.cs" />
     <Compile Include="ClassicModes\MakeSectorMode.cs" />
     <Compile Include="ErrorChecks\ActionCeilingLowerToFloorTextures.cs" />
+    <Compile Include="ErrorChecks\ActionFloorLowerToHighestFloorTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorLowerToLowestTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorRaiseByShortestLowerTextureTextures.cs" />
     <Compile Include="ErrorChecks\ActionFloorRaiseByUnitsTextures.cs" />
